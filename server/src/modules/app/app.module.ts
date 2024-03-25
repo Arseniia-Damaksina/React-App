@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import configurations from 'src/configurations';
 import { TaskListModule } from '../tasklist/tasklist.module';
+import { TaskModule } from '../task/task.module';
 
 @Module({
   imports: [
@@ -24,12 +25,13 @@ import { TaskListModule } from '../tasklist/tasklist.module';
           password: configService.get('db_password'),
           database: configService.get('db_name'),
           autoLoadEntities: true,
-          entities: ['dist/**/*.entity{.ts, .js}'],
+          entities: [TaskListModule, TaskModule],
+          //'dist/**/*.entity{.ts, .js}'
           synchronize: true
         };
       },
     }),
-    TaskListModule,
+    TaskListModule, TaskModule
   ],
   controllers: [AppController],
   providers: [AppService],
