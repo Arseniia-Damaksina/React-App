@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import configurations from 'src/configurations';
+import { TaskListModule } from '../tasklist/tasklist.module';
 
 @Module({
   imports: [
@@ -22,15 +23,15 @@ import configurations from 'src/configurations';
           username: configService.get('db_user'),
           password: configService.get('db_password'),
           database: configService.get('db_name'),
-          synchronize: true,
           autoLoadEntities: true,
-          entities: []
-        }
-      }
-    })
+          entities: ['dist/**/*.entity{.ts, .js}'],
+          synchronize: true
+        };
+      },
+    }),
+    TaskListModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
-
