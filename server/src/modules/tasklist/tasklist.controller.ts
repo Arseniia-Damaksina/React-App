@@ -23,7 +23,7 @@ export class TaskListController {
       return await this.taskListService.getAllTasklists();
     } catch (error) {
       throw new HttpException(
-        'Failed to get all task lists',
+        'Failed to fetch all task lists',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
@@ -36,7 +36,7 @@ export class TaskListController {
       return await this.taskListService.getOneTasklist(taskId);
     } catch (error) {
       throw new HttpException(
-        'Failed to get task list',
+        'Failed to fetch task list',
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

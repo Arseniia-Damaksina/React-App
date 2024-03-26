@@ -15,7 +15,7 @@ export class TaskListService {
     try {
       return await this.taskListRepository.find();
     } catch (error) {
-      throw new Error('Failed to get all task lists');
+      throw new Error('Failed to fetch all task lists');
     }
   }
 
@@ -23,7 +23,7 @@ export class TaskListService {
     try {
       return await this.taskListRepository.findOne({ where: { id } });
     } catch (error) {
-      throw new Error('Failed to get task list');
+      throw new Error('Failed to fetch task list');
     }
   }
 
@@ -51,10 +51,11 @@ export class TaskListService {
     }
   }
 
-  async deleteTasklist(id: number): Promise<void> {
+  async deleteTasklist(id: number): Promise<string> {
     try {
       const tasklist = await this.getOneTasklist(id);
       await this.taskListRepository.remove(tasklist);
+      return `Task list ${tasklist.title} has been successfully deleted.`;
     } catch (error) {
       throw new Error('Failed to delete task list');
     }
