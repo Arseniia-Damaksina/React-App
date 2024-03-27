@@ -1,5 +1,4 @@
 import "./App.css";
-import TaskColumn from "./components/TaskColumn";
 import TaskArea from "./components/TaskArea";
 
 function App() {

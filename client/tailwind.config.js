@@ -43,6 +43,9 @@ export default {
             secondaryVariant: "#5C7792",
             tertiary: "#6BBEB9",
             coolBlack: "#3A3C3D",
+            tertiaryLight: "#E3F4F4",
+            yellowPriority: "#F6F7C4",
+            yellowSecondary: "#FFC700"
         },
         borderRadius: {
             default: "4px",
@@ -75,8 +78,6 @@ export default {
             "1/4": "25%",
             "1/5": "20%",
             "1/3": "30%",
-
-
         },
         maxHeight: {
             1: "100%",
