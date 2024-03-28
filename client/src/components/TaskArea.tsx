@@ -19,7 +19,7 @@ const tasklists = [
 
 const TaskArea: React.FC = () => {
   return (
-    <div className="w-9/10 h-9/10 rounded-large bg-white shadow-lg">
+    <div className="w-9/10 h-full my-8 rounded-large bg-white shadow-lg">
       <Header />
       <div className="flex mx-6">
         {tasklists.map((tasklist) => {
