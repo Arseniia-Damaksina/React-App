@@ -1,20 +1,36 @@
-export type Tasklist = {
-  id: number;
-  title: string;
-};
-
 enum Priority {
     High = 'High',
     Medium = 'Medium',
     Low = 'Low',
   }
 
-export type TaskType = {
+interface Title {
+  title: string
+}
+
+export interface Task {
   id: number;
   name: string;
   description: string;
   dueDate: string;
   priority: string;
   taskListId: number;
-  tasklist: string;
+  taskList: Title;
 };
+
+export interface TaskList {
+  id: string;
+  title: string;
+}
+
+export interface TaskListsState {
+  taskLists: TaskList[];
+  status: 'loading' | 'succeeded' | 'failed' | '';
+  error: string | null;
+}
+
+export interface TasksState {
+  tasks: Task[];
+  status: 'loading' | 'succeeded' | 'failed' | '';
+  error: string | null;
+}

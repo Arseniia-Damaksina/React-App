@@ -1,5 +1,7 @@
-import React from "react";
-import { Tasklist } from "../types/types";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from "../store/store";
+import { TaskList } from "../types/types";
 import {
   Accordion,
   AccordionHeader,
@@ -9,9 +11,17 @@ import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import TaskMenu from "./TaskMenu";
 import Task from "./Task";
 import AddTaskButton from "./AddTaskButton";
+import { fetchTasksAsync, selectTasks } from '../slices/taskSlice';
 
-const TaskColumn: React.FC<{ tasklist: Tasklist }> = ({ tasklist }) => {
+const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const tasks = useSelector(selectTasks);
+
   const [open, setOpen] = React.useState<number | null>(null);
+
+  useEffect(() => {
+    dispatch(fetchTasksAsync());
+  }, [dispatch]); 
 
   const getPriorityColor = (priority: string): string => {
     switch (priority) {
@@ -26,96 +36,7 @@ const TaskColumn: React.FC<{ tasklist: Tasklist }> = ({ tasklist }) => {
     }
   };
 
-  const tudu = [
-    {
-      id: 1,
-      name: "Buy milk",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam tellus et felis vehicula facilisis.",
-      dueDate: "23/04/2024",
-      priority: "Medium",
-      taskListId: 1,
-      tasklist: "To Do",
-    },
-    {
-      id: 2,
-      name: "Do homework",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam tellus et felis vehicula facilisis.",
-      dueDate: "23/04/2024",
-      priority: "Low",
-      taskListId: 2,
-      tasklist: "To Do",
-    },
-    {
-      id: 3,
-      name: "Do not homework",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      dueDate: "23/04/2024",
-      priority: "Low",
-      taskListId: 2,
-      tasklist: "In Progress",
-    },
-    {
-      id: 4,
-      name: "Buy apples",
-      description: "Vestibulum aliquam tellus et felis vehicula facilisis.",
-      dueDate: "23/04/2024",
-      priority: "High",
-      taskListId: 1,
-      tasklist: "Closed",
-    },
-    {
-      id: 5,
-      name: "Buy milk",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam tellus et felis vehicula facilisis.",
-      dueDate: "23/04/2024",
-      priority: "Medium",
-      taskListId: 1,
-      tasklist: "To Do",
-    },
-    {
-      id: 6,
-      name: "Buy milk",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam tellus et felis vehicula facilisis.",
-      dueDate: "23/04/2024",
-      priority: "Medium",
-      taskListId: 1,
-      tasklist: "To Do",
-    },
-    {
-      id: 7,
-      name: "Buy milk",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam tellus et felis vehicula facilisis.",
-      dueDate: "23/04/2024",
-      priority: "Medium",
-      taskListId: 1,
-      tasklist: "Closed",
-    },
-    {
-      id: 8,
-      name: "Do homework",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum aliquam tellus et felis vehicula facilisis.",
-      dueDate: "23/04/2024",
-      priority: "Low",
-      taskListId: 2,
-      tasklist: "Closed",
-    },
-    {
-      id: 9,
-      name: "Do not homework",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-      dueDate: "23/04/2024",
-      priority: "Low",
-      taskListId: 2,
-      tasklist: "Closed",
-    },
-  ];
-  const tasks = tudu.filter((task) => task.tasklist === tasklist.title);
+  const tasksByCategory = tasks.filter((task) => task.taskList.title === tasklist.title);
 
   const handleOpen = (value: number) =>{
     setOpen((prev) => (prev === value ? null : value));
@@ -128,13 +49,13 @@ const TaskColumn: React.FC<{ tasklist: Tasklist }> = ({ tasklist }) => {
           <div className="flex justify-between py-4 pl-3 pr-2 rounded-lg bg-tertiary">
             <p className="font-bold">{tasklist.title}</p>
             <div className="flex items-center">
-              <span className="font-bold pr-1">4</span>
+              <span className="font-bold pr-1">{tasksByCategory.length}</span>
               <TaskMenu />
             </div>
           </div>
           <AddTaskButton />
           <div>
-            {tasks.map((task) => {
+            {tasksByCategory.map((task) => {
               return <Task key={task.id} task={task} />;
             })}
           </div>
@@ -148,7 +69,7 @@ const TaskColumn: React.FC<{ tasklist: Tasklist }> = ({ tasklist }) => {
             </div>
           </div>
           <div>
-            {tasks.map((task) => {
+            {tasksByCategory.map((task) => {
               return (
                 <Accordion key={task.id} className="h-min">
                   <AccordionHeader onClick={() => handleOpen(task.id)}>
