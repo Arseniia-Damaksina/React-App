@@ -17,10 +17,11 @@ import { TaskModule } from '../task/task.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        console.log("db connected")        
         return {
           type: 'postgres',
-          url: configService.get('db_url'),
+          // url: 'postgres://vrnvjsvv:WqM5Bj26wy-HRp4O0AaS8pcDUiJE3Lj3@cornelius.db.elephantsql.com/vrnvjsvv',
+          // url: configService.get('db_url'),
+          url: 'postgres://db_user:tikbQtRvsYiaFW3oLhx70ky09CLsneRc@dpg-co2ino821fec73au2c5g-a/tasklists?sslmode=no-verify',
           // host: configService.get('db_host'),
           // port: configService.get('db_port'),
           // username: configService.get('db_user'),
