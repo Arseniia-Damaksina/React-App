@@ -21,7 +21,7 @@ const TaskArea: React.FC = () => {
   return (
     <div className="w-9/10 h-9/10 rounded-large bg-white shadow-lg">
       <Header />
-      <div className="flex">
+      <div className="flex mx-6">
         {tasklists.map((tasklist) => {
           return <TaskColumn tasklist={tasklist} />;
         })}

@@ -1,6 +1,9 @@
 import React from "react";
 import { Tasklist } from "../types/types";
+import TaskMenu from "./TaskMenu";
 import Task from "./Task";
+import AddTaskButton from "./AddTaskButton";
+
 
 const TaskColumn: React.FC<{ tasklist: Tasklist }> = ({tasklist}) => {
     const tudu = [
@@ -9,7 +12,7 @@ const TaskColumn: React.FC<{ tasklist: Tasklist }> = ({tasklist}) => {
           name: "Buy milk",
           description: "description",
           dueDate: "23/04/2024",
-          priority: "High",
+          priority: "Medium",
           taskListId: 1,
           tasklist: "To Do"
         },
@@ -44,10 +47,15 @@ const TaskColumn: React.FC<{ tasklist: Tasklist }> = ({tasklist}) => {
     const tasks = tudu.filter((task) => task.tasklist === tasklist.title) 
    
     return (
-        <div className="w-96 h-96 flex flex-col">
-            <div className="w-24 bg-gray">
-                {tasklist.title}
+        <div className="w-64 flex flex-col mr-4">
+            <div className={`flex justify-between p-3 rounded-lg ${tasklist.title === "Closed" ? "bg-primary" : "bg-tertiary"}`}>
+                <span>{tasklist.title}</span>
+                <div className="flex items-center">
+                  <span>4</span>
+                  <TaskMenu />
+                </div>
             </div>
+            {tasklist.title !== "Closed" && <AddTaskButton />}
             <div>
                 {tasks.map((task) => {
                     return <Task key={task.id} task={task} />
