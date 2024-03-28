@@ -17,17 +17,18 @@ import { TaskModule } from '../task/task.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
+        console.log("db connected")        
         return {
           type: 'postgres',
-          host: configService.get('db_host'),
-          port: configService.get('db_port'),
-          username: configService.get('db_user'),
-          password: configService.get('db_password'),
-          database: configService.get('db_name'),
+          url: configService.get('db_url'),
+          // host: configService.get('db_host'),
+          // port: configService.get('db_port'),
+          // username: configService.get('db_user'),
+          // password: configService.get('db_password'),
+          // database: configService.get('db_name'),
           autoLoadEntities: true,
           entities: [TaskListModule, TaskModule],
-          //'dist/**/*.entity{.ts, .js}'
-          synchronize: true
+          // synchronize: true
         };
       },
     }),
