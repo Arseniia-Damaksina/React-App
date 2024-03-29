@@ -19,7 +19,7 @@ export interface Task {
 };
 
 export interface TaskList {
-  id: string;
+  id: number;
   title: string;
 }
 

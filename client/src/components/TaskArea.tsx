@@ -9,6 +9,12 @@ const TaskArea: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const tasklists = useSelector(selectTaskLists);
 
+  const closedTasklistIndex = tasklists.findIndex(tasklist => tasklist.title === "Closed");
+  let modifiedTasklists = closedTasklistIndex !== -1 ? tasklists.filter(tasklist => tasklist.title !== "Closed") : [...tasklists];
+  if (closedTasklistIndex !== -1) {
+    modifiedTasklists.push(tasklists[closedTasklistIndex]);
+  }
+
   useEffect(() => {
     dispatch(fetchTaskListsAsync());
   }, [dispatch]); 
@@ -17,7 +23,7 @@ const TaskArea: React.FC = () => {
     <div className="w-9/10 h-full my-8 rounded-large bg-white shadow-lg">
       <Header />
       <div className="flex mx-6">
-        {tasklists.map((tasklist) => {
+        {modifiedTasklists.map((tasklist) => {
           return <TaskColumn tasklist={tasklist} />;
         })}
       </div>

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from "../store/store";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../store/store";
 import { TaskList } from "../types/types";
 import {
   Accordion,
@@ -11,17 +11,22 @@ import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import TaskMenu from "./TaskMenu";
 import Task from "./Task";
 import AddTaskButton from "./AddTaskButton";
-import { fetchTasksAsync, selectTasks } from '../slices/taskSlice';
+import { updateTaskListAsync } from "../slices/taskListSlice";
+import { fetchTasksAsync, selectTasks } from "../slices/taskSlice";
 
 const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const tasks = useSelector(selectTasks);
 
   const [open, setOpen] = React.useState<number | null>(null);
+  const [updatedTaskList, setUpdatedTaskList] = React.useState<string>(
+    tasklist.title
+  );
+  const [updateForm, setUpdateForm] = React.useState<boolean>(false);
 
   useEffect(() => {
     dispatch(fetchTasksAsync());
-  }, [dispatch]); 
+  }, [dispatch]);
 
   const getPriorityColor = (priority: string): string => {
     switch (priority) {
@@ -36,21 +41,67 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
     }
   };
 
-  const tasksByCategory = tasks.filter((task) => task.taskList.title === tasklist.title);
+  const tasksByCategory = tasks.filter(
+    (task) => task.taskList.title === tasklist.title
+  );
 
-  const handleOpen = (value: number) =>{
+  const handleOpen = (value: number) => {
     setOpen((prev) => (prev === value ? null : value));
-  }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUpdatedTaskList(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!updatedTaskList.trim()) {
+      console.log("Task list name cannot be empty");
+      return;
+    }
+    dispatch(
+      updateTaskListAsync({
+        taskListId: tasklist.id,
+        updatedTitle: updatedTaskList,
+      })
+    ).then(() => {
+      dispatch(fetchTasksAsync());
+    });
+    setUpdateForm(false);
+  };
+
+  const handleButtonClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    setUpdateForm(true);
+  };
+
+  const handleHideButtonClick: React.MouseEventHandler<
+    HTMLButtonElement
+  > = () => {
+    setUpdateForm(false);
+  };
 
   return (
     <div className="w-64 flex flex-col mr-4">
       {tasklist.title !== "Closed" ? (
         <>
           <div className="flex justify-between py-4 pl-3 pr-2 rounded-lg bg-tertiary">
-            <p className="font-bold">{tasklist.title}</p>
+            {updateForm ? (
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="text"
+                  value={updatedTaskList}
+                  onChange={handleChange}
+                  placeholder="Edit your tasklist"
+                />
+                <button type="submit">Edit</button>
+                <button onClick={handleHideButtonClick}>Hide</button>
+              </form>
+            ) : (
+              <p className="font-bold">{tasklist.title}</p>
+            )}
             <div className="flex items-center">
               <span className="font-bold pr-1">{tasksByCategory.length}</span>
-              <TaskMenu />
+              <TaskMenu id={tasklist.id} onClick={handleButtonClick} />
             </div>
           </div>
           <AddTaskButton />
@@ -65,7 +116,7 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
           <div className="flex justify-between py-4 pl-3 pr-2 rounded-lg bg-primary">
             <p className="font-bold">{tasklist.title}</p>
             <div className="flex items-center">
-              <span className="font-bold pr-2">4</span>
+              <span className="font-bold pr-2">{tasksByCategory.length}</span>
             </div>
           </div>
           <div>
