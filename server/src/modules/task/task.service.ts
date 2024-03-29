@@ -1,4 +1,3 @@
-// task.service.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -14,7 +13,18 @@ export class TaskService {
 
   async getAllTasks(): Promise<TaskEntity[]> {
     try {
-      return await this.taskRepository.find();
+      return await this.taskRepository.createQueryBuilder('task')
+      .leftJoinAndSelect('task.taskList', 'taskList') 
+      .select([
+        'task.id',
+        'task.name',
+        'task.description',
+        'task.dueDate',
+        'task.priority',
+        'task.taskListId',
+        'taskList.title'
+      ])
+      .getMany();
     } catch (error) {
       throw new Error('Failed to fetch all tasks');
     }
