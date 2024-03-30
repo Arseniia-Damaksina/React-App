@@ -42,8 +42,8 @@ const Task: React.FC<{ task: TaskInterface; tasklists: TaskList[] }> = ({
 
 
   return (
-    <div className="mb-3 pt-3 pb-4 pl-4 pr-2 rounded-lg bg-tertiaryLight">
-      <EditTaskForm task={task} />
+    <div className="mb-3 pt-3 pb-4 px-4 rounded-lg bg-tertiaryLight">
+      {/* <EditTaskForm task={task} /> */}
       <div className="w-full flex justify-between">
         <p className="font-bold">{task.name}</p>
         <TaskMenu id={task.id} />
@@ -66,6 +66,7 @@ const Task: React.FC<{ task: TaskInterface; tasklists: TaskList[] }> = ({
         name="moveTo"
         value={selectMove}
         onChange={(e) => handleSelectChange(e)}
+        className="w-full p-1 rounded-lg mt-3"
       >
         <option value="">Move To</option>
         {tasklists.map((taskList) => (

@@ -14,6 +14,7 @@ import AddTaskButton from "./AddTaskButton";
 import AddTaskForm from "./forms/AddTaskForm";
 import { updateTaskListAsync, selectTaskLists } from "../slices/taskListSlice";
 import { fetchTasksAsync, selectTasks } from "../slices/taskSlice";
+import Modal from "./ui/Modal";
 
 const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
   const dispatch = useAppDispatch();
@@ -21,6 +22,7 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
   const tasklists = useSelector(selectTaskLists);
 
   const [open, setOpen] = React.useState<number | null>(null);
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [updatedTaskList, setUpdatedTaskList] = React.useState<string>(
     tasklist.title
   );
@@ -84,21 +86,37 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
 
   return (
     <>
-      <AddTaskForm tasklist={tasklist} />
+      {modalOpen && (
+        <Modal active={modalOpen} setActive={setModalOpen}>
+          <AddTaskForm tasklist={tasklist} setModalOpen={setModalOpen}/>
+        </Modal>
+      )}
+
       <div className="w-64 flex flex-col mr-4">
         {tasklist.title !== "Closed" ? (
           <>
             <div className="flex justify-between py-4 pl-3 pr-2 rounded-lg bg-tertiary">
               {updateForm ? (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="mr-2">
                   <input
                     type="text"
                     value={updatedTaskList}
                     onChange={handleChange}
                     placeholder="Edit your tasklist"
+                    className="rounded-lg p-2"
                   />
-                  <button type="submit">Edit</button>
-                  <button onClick={handleHideButtonClick}>Hide</button>
+                  <button
+                    type="submit"
+                    className="px-2 py-1 mt-2 mr-2 rounded-lg bg-secondary text-white"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={handleHideButtonClick}
+                    className="px-2 py-1 rounded-lg bg-white text-secondary shadow-lg border border-secondary"
+                  >
+                    Hide
+                  </button>
                 </form>
               ) : (
                 <p className="font-bold">{tasklist.title}</p>
@@ -108,10 +126,10 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
                 <TaskListMenu id={tasklist.id} onClick={handleButtonClick} />
               </div>
             </div>
-            <AddTaskButton />
+            <AddTaskButton onClick={() => setModalOpen(true)}/>
             <div>
               {tasksByCategory.map((task) => {
-                return <Task key={task.id} task={task} tasklists={tasklists}/>;
+                return <Task key={task.id} task={task} tasklists={tasklists} />;
               })}
             </div>
           </>

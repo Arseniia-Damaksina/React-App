@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../store/store";
+import { useAppDispatch } from "../store/store";
 import { createTaskListAsync } from "../slices/taskListSlice";
 
 const AddTasklistButton: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
   const [newTaskList, setNewTaskList] = useState<string>("");
   const [taskListForm, setTaskListForm] = useState<boolean>(false);
 
@@ -14,7 +13,7 @@ const AddTasklistButton: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!newTaskList.trim()) { 
+    if (!newTaskList.trim()) {
       console.log("Task list name cannot be empty");
       return;
     }
@@ -23,16 +22,18 @@ const AddTasklistButton: React.FC = () => {
     setTaskListForm(false);
   };
 
-  const handleButtonClick : React.MouseEventHandler<HTMLButtonElement> = () => {
+  const handleButtonClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     setTaskListForm(true);
   };
 
-  const handleHideButtonClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const handleHideButtonClick: React.MouseEventHandler<
+    HTMLButtonElement
+  > = () => {
     setTaskListForm(false);
   };
 
   return (
-    <>
+    <div className="flex items-center">
       {taskListForm ? (
         <form onSubmit={handleSubmit}>
           <input
@@ -40,9 +41,20 @@ const AddTasklistButton: React.FC = () => {
             value={newTaskList}
             onChange={handleChange}
             placeholder="Add your tasklist"
+            className="border border-secondary rounded-lg p-1 bg-white shadow-lg"
           />
-          <button type="submit">Create</button>
-          <button onClick={handleHideButtonClick}>Hide</button>
+          <button
+            type="submit"
+            className="py-1 px-2 ml-2 rounded-lg bg-secondary text-white"
+          >
+            Create
+          </button>
+          <button
+            className="py-1 px-2 ml-2 rounded-lg bg-white text-secondary shadow-lg border border-secondary"
+            onClick={handleHideButtonClick}
+          >
+            Hide
+          </button>
         </form>
       ) : (
         <button
@@ -52,7 +64,7 @@ const AddTasklistButton: React.FC = () => {
           + Create New List
         </button>
       )}
-    </>
+    </div>
   );
 };
 

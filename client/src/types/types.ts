@@ -1,8 +1,10 @@
+import { ReactNode } from "react";
+
 enum Priority {
-    High = 'High',
-    Medium = 'Medium',
-    Low = 'Low',
-  }
+  High = "High",
+  Medium = "Medium",
+  Low = "Low",
+}
 
 export interface FormData {
   name: string;
@@ -12,7 +14,7 @@ export interface FormData {
 }
 
 interface Title {
-  title: string
+  title: string;
 }
 
 export interface TaskInterface {
@@ -23,7 +25,7 @@ export interface TaskInterface {
   priority: string;
   taskListId: number;
   taskList: Title;
-};
+}
 
 export interface addTask {
   name: string;
@@ -31,11 +33,11 @@ export interface addTask {
   dueDate: string;
   priority: string;
   taskListId: number;
-};
+}
 
 export interface TasksState {
-  tasks: TaskInterface[],
-  status: 'loading' | 'succeeded' | 'failed' | '';
+  tasks: TaskInterface[];
+  status: "loading" | "succeeded" | "failed" | "";
   error: string | null;
 }
 
@@ -46,12 +48,22 @@ export interface TaskList {
 
 export interface TaskListsState {
   taskLists: TaskList[];
-  status: 'loading' | 'succeeded' | 'failed' | '';
+  status: "loading" | "succeeded" | "failed" | "";
   error: string | null;
 }
 
 export interface TasksState {
   tasks: TaskInterface[];
-  status: 'loading' | 'succeeded' | 'failed' | '';
+  status: "loading" | "succeeded" | "failed" | "";
   error: string | null;
+}
+
+export interface ModalProps {
+  active: boolean;
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
+  children: ReactNode;
+}
+
+export interface onClickButtonProps {
+  onClick: React.MouseEventHandler<HTMLButtonElement>
 }

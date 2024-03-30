@@ -21,12 +21,7 @@ export default {
         xxl: "1536px",
         // => @media (min-width: 1536px) { ... }
     },
-    fontSize: {
-        sm: "0.8rem",
-        base: "1rem",
-        xl: "1.25rem",
-        xxl: "2rem",
-    },
+
     fontFamily: {
         logoFont: ["Omegle", "sans-serif"],
         sloganFontRegular: ["RobotoMonoRegular", "monospace"],
