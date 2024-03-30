@@ -1,5 +1,5 @@
 import React from "react";
-import { onClickButtonProps } from "../types/types";
+import { onClickButtonProps } from "../../types/types";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 const AddTaskButton: React.FC<onClickButtonProps> = ({ onClick }) => {

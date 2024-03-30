@@ -9,7 +9,7 @@ const Modal: React.FC<ModalProps> = ({ active, setActive, children }) => {
       onClick={(e) => setActive(false)}
     >
       <div
-        className={`modalContent ${active ? "active" : ""}`}
+        className={`flex justify-center items-center modalContent ${active ? "active" : ""}`}
         onClick={(e) => e.stopPropagation()}
       >
         {children}

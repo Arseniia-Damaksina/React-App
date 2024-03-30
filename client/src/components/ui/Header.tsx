@@ -1,7 +1,7 @@
 import React from "react";
-import logo from "../assets/tudu.png";
-import AddTasklistButton from "./AddTasklistButton";
-import HistoryButton from "./HistoryButton";
+import logo from "../../assets/tudu.png";
+import AddTasklistButton from "../buttons/AddTasklistButton";
+import HistoryButton from "../buttons/HistoryButton";
 
 const Header: React.FC = () => {
   return (

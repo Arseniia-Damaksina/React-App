@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "../store/store";
-import { createTaskListAsync } from "../slices/taskListSlice";
+import { useAppDispatch } from "../../store/store";
+import { createTaskListAsync } from "../../slices/taskListSlice";
 
 const AddTasklistButton: React.FC = () => {
   const dispatch = useAppDispatch();

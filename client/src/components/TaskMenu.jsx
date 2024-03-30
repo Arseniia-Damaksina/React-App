@@ -9,12 +9,13 @@ import {
   EllipsisVerticalIcon,
   PencilSquareIcon,
   TrashIcon,
+  FolderOpenIcon,
 } from "@heroicons/react/24/outline";
 import { useAppDispatch } from "../store/store";
 import { deleteTaskAsync } from "../slices/taskSlice";
 import { fetchTasksAsync } from "../slices/taskSlice";
 
-const TaskMenu = ({ id, onClick }) => {
+const TaskMenu = ({ id, onClick, setEditModalOpen, setTaskModalOpen }) => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchTasksAsync());
@@ -26,13 +27,28 @@ const TaskMenu = ({ id, onClick }) => {
     });
   };
 
+  const handleEditTask = () => {
+    setEditModalOpen(true);
+    setTaskModalOpen(false);
+  }
+
   return (
     <Menu>
       <MenuHandler>
         <EllipsisVerticalIcon className="w-6 h-6" />
       </MenuHandler>
       <MenuList>
-        <MenuItem onClick={onClick} className="flex items-center mb-1">
+        <MenuItem
+          onClick={() => setTaskModalOpen(true)}
+          className="flex items-center mb-1"
+        >
+          <FolderOpenIcon className="w-5 h-5 mr-1" />
+          Open
+        </MenuItem>
+        <MenuItem
+          onClick={handleEditTask}
+          className="flex items-center mb-1"
+        >
           <PencilSquareIcon className="w-5 h-5 mr-1" />
           Edit
         </MenuItem>

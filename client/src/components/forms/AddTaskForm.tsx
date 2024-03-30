@@ -6,8 +6,8 @@ import { FormData, TaskList } from "../../types/types";
 
 const AddTaskForm: React.FC<{
   tasklist: TaskList;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ tasklist, setModalOpen }) => {
+  setAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ tasklist, setAddModalOpen }) => {
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -42,10 +42,10 @@ const AddTaskForm: React.FC<{
   };
 
   return (
-    <div className="flex flex-col items-center w-80 border-2 border-secondary bg-white rounded-2xl">
+    <div className="flex flex-col items-center w-80 bg-white rounded-2xl">
       <div className="flex flex-col w-full">
         <div className="w-full flex justify-end">
-          <button onClick={() => setModalOpen(false)}>
+          <button onClick={() => setAddModalOpen(false)}>
           <XMarkIcon className="w-6 h-6 mr-3 mt-3" />
           </button>
         </div>

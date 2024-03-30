@@ -10,7 +10,7 @@ import {
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import TaskListMenu from "./TaskListMenu";
 import Task from "./Task";
-import AddTaskButton from "./AddTaskButton";
+import AddTaskButton from "./buttons/AddTaskButton";
 import AddTaskForm from "./forms/AddTaskForm";
 import { updateTaskListAsync, selectTaskLists } from "../slices/taskListSlice";
 import { fetchTasksAsync, selectTasks } from "../slices/taskSlice";
@@ -22,7 +22,7 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
   const tasklists = useSelector(selectTaskLists);
 
   const [open, setOpen] = React.useState<number | null>(null);
-  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [addModalOpen, setAddModalOpen] = React.useState<boolean>(false);
   const [updatedTaskList, setUpdatedTaskList] = React.useState<string>(
     tasklist.title
   );
@@ -86,9 +86,9 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
 
   return (
     <>
-      {modalOpen && (
-        <Modal active={modalOpen} setActive={setModalOpen}>
-          <AddTaskForm tasklist={tasklist} setModalOpen={setModalOpen}/>
+      {addModalOpen && (
+        <Modal active={addModalOpen} setActive={setAddModalOpen}>
+          <AddTaskForm tasklist={tasklist} setAddModalOpen={setAddModalOpen}/>
         </Modal>
       )}
 
@@ -123,10 +123,10 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
               )}
               <div className="flex items-center">
                 <span className="font-bold pr-1">{tasksByCategory.length}</span>
-                <TaskListMenu id={tasklist.id} onClick={handleButtonClick} />
+                <TaskListMenu id={tasklist.id} onClick={handleButtonClick} setAddModalOpen={setAddModalOpen}/>
               </div>
             </div>
-            <AddTaskButton onClick={() => setModalOpen(true)}/>
+            <AddTaskButton onClick={() => setAddModalOpen(true)}/>
             <div>
               {tasksByCategory.map((task) => {
                 return <Task key={task.id} task={task} tasklists={tasklists} />;
