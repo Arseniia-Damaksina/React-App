@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 
-enum Priority {
-  High = "High",
-  Medium = "Medium",
-  Low = "Low",
-}
+// export enum Priority {
+//   High = "High",
+//   Medium = "Medium",
+//   Low = "Low",
+// }
 
 export interface FormData {
   name: string;

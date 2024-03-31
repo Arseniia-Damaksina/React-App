@@ -13,7 +13,13 @@ import {
 import { useAppDispatch } from "../store/store";
 import { deleteTaskListAsync } from "../slices/taskListSlice";
 
-const TaskListMenu = ({ id, onClick, setAddModalOpen }) => {
+const TaskListMenu
+// : React.FC<{
+//   id: number;
+//   onClick: React.MouseEventHandler<HTMLButtonElement>;
+//   setAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+// }> 
+= ({ id, onClick, setAddModalOpen }) => {
   const dispatch = useAppDispatch();
 
   const handleDeleteTaskList = (taskListId) => {
@@ -30,7 +36,10 @@ const TaskListMenu = ({ id, onClick, setAddModalOpen }) => {
           <PencilSquareIcon className="w-5 h-5 mr-1" />
           Edit
         </MenuItem>
-        <MenuItem onClick={() => setAddModalOpen(true)} className="flex items-center mb-1">
+        <MenuItem
+          onClick={() => setAddModalOpen(true)}
+          className="flex items-center mb-1"
+        >
           <PlusIcon className="w-5 h-5 mr-1" /> Add New Task
         </MenuItem>
         <MenuItem
