@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useAppDispatch } from "../../store/store";
 import { createTaskListAsync } from "../../slices/taskListSlice";
+import { capitalizeString } from "../../utils/utilFunctions";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddTasklistButton: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -14,10 +17,18 @@ const AddTasklistButton: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newTaskList.trim()) {
-      console.log("Task list name cannot be empty");
+      toast.error("Task list cannot be empty", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
       return;
     }
-    dispatch(createTaskListAsync(newTaskList));
+    dispatch(createTaskListAsync(capitalizeString(newTaskList)));
     setNewTaskList("");
     setTaskListForm(false);
   };
@@ -64,6 +75,7 @@ const AddTasklistButton: React.FC = () => {
           + Create New List
         </button>
       )}
+      <ToastContainer />
     </div>
   );
 };

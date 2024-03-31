@@ -15,6 +15,9 @@ import AddTaskForm from "./forms/AddTaskForm";
 import { updateTaskListAsync, selectTaskLists } from "../slices/taskListSlice";
 import { fetchTasksAsync, selectTasks } from "../slices/taskSlice";
 import Modal from "./ui/Modal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { capitalizeString } from "../utils/utilFunctions";
 
 const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
   const dispatch = useAppDispatch();
@@ -60,13 +63,21 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!updatedTaskList.trim()) {
-      console.log("Task list name cannot be empty");
+      toast.error("Task list cannot be empty", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
       return;
     }
     dispatch(
       updateTaskListAsync({
         taskListId: tasklist.id,
-        updatedTitle: updatedTaskList,
+        updatedTitle: capitalizeString(updatedTaskList),
       })
     ).then(() => {
       dispatch(fetchTasksAsync());
@@ -88,7 +99,7 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
     <>
       {addModalOpen && (
         <Modal active={addModalOpen} setActive={setAddModalOpen}>
-          <AddTaskForm tasklist={tasklist} setAddModalOpen={setAddModalOpen}/>
+          <AddTaskForm tasklist={tasklist} setAddModalOpen={setAddModalOpen} />
         </Modal>
       )}
 
@@ -123,10 +134,14 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
               )}
               <div className="flex items-center">
                 <span className="font-bold pr-1">{tasksByCategory.length}</span>
-                <TaskListMenu id={tasklist.id} onClick={handleButtonClick} setAddModalOpen={setAddModalOpen}/>
+                <TaskListMenu
+                  id={tasklist.id}
+                  onClick={handleButtonClick}
+                  setAddModalOpen={setAddModalOpen}
+                />
               </div>
             </div>
-            <AddTaskButton onClick={() => setAddModalOpen(true)}/>
+            <AddTaskButton onClick={() => setAddModalOpen(true)} />
             <div>
               {tasksByCategory.map((task) => {
                 return <Task key={task.id} task={task} tasklists={tasklists} />;
@@ -172,6 +187,7 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
             </div>
           </>
         )}
+        <ToastContainer />
       </div>
     </>
   );

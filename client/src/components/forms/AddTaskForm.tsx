@@ -3,6 +3,9 @@ import { useAppDispatch } from "../../store/store";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { createTaskAsync } from "../../slices/taskSlice";
 import { FormData, TaskList } from "../../types/types";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { capitalizeFirstLetter } from "../../utils/utilFunctions";
 
 const AddTaskForm: React.FC<{
   tasklist: TaskList;
@@ -31,7 +34,55 @@ const AddTaskForm: React.FC<{
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(createTaskAsync({ ...formData, taskListId: tasklist.id }));
+
+    if (!formData.name.trim()) {
+      toast.error("Task list cannot be empty", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      return;
+    }
+
+    const currentDate = new Date();
+    const selectedDate = new Date(formData.dueDate);
+    if (!formData.dueDate || selectedDate < currentDate) {
+      toast.error("Please, select the valid date", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      return;
+    }
+
+    if (!["Low", "Medium", "High"].includes(formData.priority)) {
+      toast.error("Please, choose the priority", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      return;
+    }
+
+    dispatch(
+      createTaskAsync({
+        ...formData,
+        name: capitalizeFirstLetter(formData.name),
+        taskListId: tasklist.id,
+      })
+    );
     window.location.reload();
     setFormData({
       name: "",
@@ -46,7 +97,7 @@ const AddTaskForm: React.FC<{
       <div className="flex flex-col w-full">
         <div className="w-full flex justify-end">
           <button onClick={() => setAddModalOpen(false)}>
-          <XMarkIcon className="w-6 h-6 mr-3 mt-3" />
+            <XMarkIcon className="w-6 h-6 mr-3 mt-3" />
           </button>
         </div>
         <h1 className="text-secondary w-full font-bold text-3xl p-3 text-center">
@@ -98,6 +149,7 @@ const AddTaskForm: React.FC<{
           Submit
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };

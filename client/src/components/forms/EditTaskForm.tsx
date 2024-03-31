@@ -3,6 +3,9 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch } from "../../store/store";
 import { updateTaskAsync } from "../../slices/taskSlice";
 import { FormData, TaskInterface } from "../../types/types";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { capitalizeFirstLetter } from "../../utils/utilFunctions";
 
 const EditTaskForm: React.FC<{
   task: TaskInterface;
@@ -29,10 +32,52 @@ const EditTaskForm: React.FC<{
     }));
   };
 
-  const taskToUpdate = { ...formData, taskListId: task.taskListId };
+  const taskToUpdate = { ...formData, name: capitalizeFirstLetter(formData.name), taskListId: task.taskListId };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!formData.name.trim()) {
+      toast.error("Task list cannot be empty", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      return;
+    }
+
+    const currentDate = new Date();
+    const selectedDate = new Date(formData.dueDate);
+    if (!formData.dueDate || selectedDate < currentDate) {
+      toast.error("Please, select the valid date", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      return;
+    }
+
+    if (!["Low", "Medium", "High"].includes(formData.priority)) {
+      toast.error("Please, choose the priority", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+      });
+      return;
+    }
+
     dispatch(updateTaskAsync({ taskId: task.id, updatedTask: taskToUpdate }));
     window.location.reload();
   };
@@ -46,7 +91,7 @@ const EditTaskForm: React.FC<{
           </button>
         </div>
         <h1 className="text-secondary w-full font-bold text-3xl p-3 text-center">
-          Add Task
+          Edit Task
         </h1>
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col py-3 w-5/6">
@@ -93,6 +138,7 @@ const EditTaskForm: React.FC<{
           Submit
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };
