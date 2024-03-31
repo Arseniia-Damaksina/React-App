@@ -73,18 +73,17 @@ const Task: React.FC<{
         }`}
       >
         <div
-          className={`w-full flex justify-between cursor-pointer ${closed ? "pointer" : ""}`}
+          className={`w-full flex justify-between cursor-pointer ${
+            closed ? "pointer" : ""
+          }`}
           onClick={closed ? () => handleOpen(task.id) : undefined}
         >
-          <p className="font-bold">
-            {task.name}
-          </p>
+          <p className="font-bold">{task.name}</p>
 
           <TaskMenu
             id={task.id}
             setEditModalOpen={setEditModalOpen}
             setTaskModalOpen={setTaskModalOpen}
-            closed={closed}
           />
         </div>
         {(closed && open === task.id) || !closed ? (

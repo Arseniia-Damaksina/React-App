@@ -13,13 +13,7 @@ import {
 import { useAppDispatch } from "../store/store";
 import { deleteTaskListAsync } from "../slices/taskListSlice";
 
-const TaskListMenu
-// : React.FC<{
-//   id: number;
-//   onClick: React.MouseEventHandler<HTMLButtonElement>;
-//   setAddModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-// }> 
-= ({ id, onClick, setAddModalOpen }) => {
+const TaskListMenu = ({ id, onClick, setAddModalOpen }) => {
   const dispatch = useAppDispatch();
 
   const handleDeleteTaskList = (taskListId) => {
