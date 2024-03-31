@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../store/store";
 import { TaskList } from "../types/types";
+// @ts-ignore
 import TaskListMenu from "./TaskListMenu";
 import Task from "./Task";
 import AddTaskButton from "./buttons/AddTaskButton";
@@ -115,6 +116,7 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
                   id={tasklist.id}
                   onClick={handleButtonClick}
                   setAddModalOpen={setAddModalOpen}
+                  
                 />
               </div>
             </div>

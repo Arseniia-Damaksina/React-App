@@ -3,7 +3,7 @@ import {
   Menu,
   MenuHandler,
   MenuList,
-  MenuItem,
+  MenuItem
 } from "@material-tailwind/react";
 import {
   EllipsisVerticalIcon,
@@ -15,9 +15,16 @@ import { useAppDispatch } from "../store/store";
 import { deleteTaskAsync } from "../slices/taskSlice";
 import { fetchTasksAsync } from "../slices/taskSlice";
 
-const TaskMenu = ({
+
+const TaskMenu
+// : React.FC<{
+//   id: number;
+//   setEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+//   setTaskModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+//   closed: boolean;
+// }>
+ = ({
   id,
-  onClick,
   setEditModalOpen,
   setTaskModalOpen,
   closed,
