@@ -110,6 +110,7 @@ const EditTaskForm: React.FC<{
           placeholder="Description"
           value={formData.description}
           onChange={handleChange}
+          className="rounded-lg p-2 border-2 mb-3 shadow-lg"
         ></textarea>
         <label htmlFor="name">Date: </label>
         <input
