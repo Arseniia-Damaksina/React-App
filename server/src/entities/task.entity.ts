@@ -25,9 +25,10 @@ export class TaskEntity {
   @Column({ type: 'enum', enum: Priority })
   priority: Priority;
 
-  @ManyToOne(() => TaskListEntity, (taskList) => taskList.tasks)
+  @ManyToOne(() => TaskListEntity, taskList => taskList.tasks, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'taskListId' })
   taskList: TaskListEntity;
+  
 
   @Column()
   taskListId: number;

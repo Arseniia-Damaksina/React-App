@@ -6,7 +6,7 @@ import TaskArea from "./components/TaskArea";
 function App() {
   return (
     <Provider store={store}>
-      <div className="w-full min-h-screen h-fit flex justify-center items-start bg-background">
+      <div className="w-full min-h-screen h-auto flex justify-center items-center bg-background">
         <TaskArea />
       </div>
     </Provider>

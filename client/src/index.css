@@ -16,6 +16,12 @@
     src: url(/src/fonts/RobotoMono-Bold.ttf);
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .top {
     clip-path: polygon(0 0, 100% 0, 100% calc(100% - 50px), 0 100%);
 }
