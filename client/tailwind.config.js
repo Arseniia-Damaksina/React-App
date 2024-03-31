@@ -38,6 +38,7 @@ export default {
         tertiaryLight: "#E3F4F4",
         yellowPriority: "#F6F7C4",
         yellowSecondary: "#FFC700",
+        closed: "#F5CFD6"
       },
       borderRadius: {
         default: "4px",

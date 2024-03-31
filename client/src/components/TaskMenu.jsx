@@ -15,7 +15,13 @@ import { useAppDispatch } from "../store/store";
 import { deleteTaskAsync } from "../slices/taskSlice";
 import { fetchTasksAsync } from "../slices/taskSlice";
 
-const TaskMenu = ({ id, onClick, setEditModalOpen, setTaskModalOpen }) => {
+const TaskMenu = ({
+  id,
+  onClick,
+  setEditModalOpen,
+  setTaskModalOpen,
+  closed,
+}) => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchTasksAsync());
@@ -30,7 +36,7 @@ const TaskMenu = ({ id, onClick, setEditModalOpen, setTaskModalOpen }) => {
   const handleEditTask = () => {
     setEditModalOpen(true);
     setTaskModalOpen(false);
-  }
+  };
 
   return (
     <Menu>
@@ -45,13 +51,12 @@ const TaskMenu = ({ id, onClick, setEditModalOpen, setTaskModalOpen }) => {
           <FolderOpenIcon className="w-5 h-5 mr-1" />
           Open
         </MenuItem>
-        <MenuItem
-          onClick={handleEditTask}
-          className="flex items-center mb-1"
-        >
-          <PencilSquareIcon className="w-5 h-5 mr-1" />
-          Edit
-        </MenuItem>
+        {!closed && (
+          <MenuItem onClick={handleEditTask} className="flex items-center mb-1">
+            <PencilSquareIcon className="w-5 h-5 mr-1" />
+            Edit
+          </MenuItem>
+        )}
         <MenuItem
           onClick={() => handleDeleteTask(id)}
           className="flex items-center mb-1 text-primary"
