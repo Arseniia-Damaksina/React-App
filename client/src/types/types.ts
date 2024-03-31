@@ -58,6 +58,20 @@ export interface TasksState {
   error: string | null;
 }
 
+export interface Activity {
+  id: number,
+  actionType: string;
+  entityType: string;
+  entityTypeId: number;
+  createdAt: Date;
+}
+
+export interface ActivityState {
+  activity: Activity[];
+  status: "loading" | "succeeded" | "failed" | "";
+  error: string | null;
+}
+
 export interface ModalProps {
   active: boolean;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;

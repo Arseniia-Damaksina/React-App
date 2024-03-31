@@ -12,8 +12,8 @@ const taskListActions = {
 }
 
 const actionType = {
-  TASKLIST: 'TASKLIST',
-  TASK: 'TASK'
+  TASKLIST: 'tasklist',
+  TASK: 'task'
 }
 
 @Injectable()
