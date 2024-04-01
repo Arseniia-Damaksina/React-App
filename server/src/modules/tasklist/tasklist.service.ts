@@ -55,6 +55,7 @@ export class TaskListService {
         entityType: actionType.TASKLIST,
         entityTypeId: savedTasklist.id,
         createdAt: new Date(),
+        log: `New task list ${newTasklist.title} was created`
       });
 
       return savedTasklist;
@@ -66,6 +67,7 @@ export class TaskListService {
   async updateTasklist(id: number, updateTasklistDto: CreateTaskListDto): Promise<TaskListEntity> {
     try {
       const tasklist = await this.getOneTasklist(id);
+      const tasklistOriginal = tasklist.title;
       tasklist.title = updateTasklistDto.title;
       const updatedTasklist = await this.taskListRepository.save(tasklist);
       
@@ -74,6 +76,7 @@ export class TaskListService {
         entityType: actionType.TASKLIST,
         entityTypeId: updatedTasklist.id,
         createdAt: new Date(),
+        log: `Task list was renamed from ${tasklistOriginal} to ${updateTasklistDto.title}`
       });
 
       return updatedTasklist;
@@ -85,6 +88,7 @@ export class TaskListService {
   async deleteTasklist(id: number): Promise<string> {
     try {
       const tasklist = await this.getOneTasklist(id);
+      const tasklistOriginal = tasklist.title;
       await this.taskListRepository.remove(tasklist);
 
       await this.activityLogService.logAction({
@@ -92,6 +96,7 @@ export class TaskListService {
         entityType: actionType.TASKLIST,
         entityTypeId: id,
         createdAt: new Date(),
+        log: `Task list ${tasklistOriginal} was deleted`
       });
 
       return `Task list ${tasklist.title} has been successfully deleted.`;

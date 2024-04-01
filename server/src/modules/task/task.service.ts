@@ -81,6 +81,7 @@ export class TaskService {
         entityType: actionType.TASK,
         entityTypeId: savedTask.id,
         createdAt: new Date(),
+        log: `Task ${newTask.name} was created`,
       });
 
       return savedTask;
@@ -89,79 +90,89 @@ export class TaskService {
     }
   }
 
-  async updateTask(id: number, updateTaskDto: CreateTaskDto): Promise<TaskEntity> {
+  async updateTask(
+    id: number,
+    updateTaskDto: CreateTaskDto,
+  ): Promise<TaskEntity> {
     try {
       const task = await this.getOneTask(id);
       if (!task) {
         throw new Error('Task not found');
       }
-  
-      const { name, description, dueDate, priority, taskListId } = updateTaskDto;
-  
+
+      const { name, description, dueDate, priority, taskListId } =
+        updateTaskDto;
+
       const originalTask = { ...task };
-  
+
       task.name = name;
       task.description = description;
       task.dueDate = dueDate;
       task.priority = priority;
       task.taskListId = taskListId;
-  
+
       const updatedTask = await this.taskRepository.save(task);
-  
+
       if (originalTask.name !== updatedTask.name) {
         await this.activityLogService.logAction({
           actionType: taskActions.RENAME_TASK,
           entityType: actionType.TASK,
           entityTypeId: updatedTask.id,
           createdAt: new Date(),
+          log: `Task was renamed from ${originalTask.name} to ${updatedTask.name}`,
         });
       }
-  
+
       if (originalTask.description !== updatedTask.description) {
         await this.activityLogService.logAction({
           actionType: taskActions.UPDATE_DESC,
           entityType: actionType.TASK,
           entityTypeId: updatedTask.id,
           createdAt: new Date(),
+          log: `Task description at ${updatedTask.name} was changed`,
         });
       }
-  
+
       if (originalTask.dueDate !== updatedTask.dueDate) {
         await this.activityLogService.logAction({
           actionType: taskActions.UPDATE_DATE,
           entityType: actionType.TASK,
           entityTypeId: updatedTask.id,
           createdAt: new Date(),
+          log: `Due date at ${updatedTask.name} was changed from ${originalTask.dueDate} to ${updatedTask.dueDate}`,
         });
       }
-  
+
       if (originalTask.priority !== updatedTask.priority) {
         await this.activityLogService.logAction({
           actionType: taskActions.UPDATE_PRIORITY,
           entityType: actionType.TASK,
           entityTypeId: updatedTask.id,
           createdAt: new Date(),
+          log: `Priority at ${updatedTask.name} was changed from ${originalTask.priority} to ${updatedTask.priority}`,
         });
       }
-  
+
       if (originalTask.taskListId !== updatedTask.taskListId) {
         await this.activityLogService.logAction({
           actionType: taskActions.UPDATE_TASKLIST,
           entityType: actionType.TASK,
           entityTypeId: updatedTask.id,
           createdAt: new Date(),
+          log: `Task list at ${updatedTask.name} was changed from ${originalTask.taskList.title} to ${updatedTask.taskList.title}`,
         });
       }
-  
+
       return updatedTask;
     } catch (error) {
       throw new Error('Failed to update task');
     }
   }
-  
+
   async deleteTask(id: number): Promise<string> {
     try {
       const task = await this.getOneTask(id);
+      const originalTask = {...task};
       await this.taskRepository.remove(task);
 
       await this.activityLogService.logAction({
@@ -169,6 +180,7 @@ export class TaskService {
         entityType: actionType.TASK,
         entityTypeId: id,
         createdAt: new Date(),
+        log: `Task ${originalTask.name} was deleted`
       });
 
       return `Task ${task.name} has been successfully deleted.`;

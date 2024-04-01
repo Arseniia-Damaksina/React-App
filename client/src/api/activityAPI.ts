@@ -14,7 +14,7 @@ export async function getAllActivityLogs(): Promise<AxiosResponse<Activity[]>> {
 
 export async function getLogsByTypeAndId(
   type: string,
-  id: string
+  id: number
 ): Promise<AxiosResponse<Activity[]>> {
   try {
     const response = await axios.get<Activity[]>(

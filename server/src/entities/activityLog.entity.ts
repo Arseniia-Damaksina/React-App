@@ -14,6 +14,9 @@ export class ActivityLogEntity {
   @Column()
   entityTypeId: number;
 
+  @Column()
+  log: string;
+
   @CreateDateColumn()
   createdAt: Date;
 }

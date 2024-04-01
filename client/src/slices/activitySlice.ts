@@ -28,7 +28,7 @@ export const fetchAllActivityLogs = createAsyncThunk(
 
 export const fetchLogsByTypeAndId = createAsyncThunk(
   "activity/fetchLogsByTypeAndId",
-  async ({ type, id }: { type: string; id: string }) => {
+  async ({ type, id }: { type: string; id: number }) => {
     try {
       const response = await getLogsByTypeAndId(type, id);
       return response.data;
