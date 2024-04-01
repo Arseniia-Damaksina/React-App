@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch } from "../../store/store";
 import { createTaskListAsync } from "../../slices/taskListSlice";
 import { capitalizeString } from "../../utils/utilFunctions";
@@ -69,10 +70,10 @@ const AddTasklistButton: React.FC = () => {
         </form>
       ) : (
         <button
-          className="p-3 rounded-lg bg-secondary text-white"
+          className="p-3 rounded-lg bg-secondary text-white flex items-center"
           onClick={handleButtonClick}
         >
-          + Create New List
+         <PlusIcon className="w-5 h-5"/><span className="hidden sm:block">Create New List</span>
         </button>
       )}
       <ToastContainer />

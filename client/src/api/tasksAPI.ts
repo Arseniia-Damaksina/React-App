@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { TaskInterface, addTask } from '../types/types';
-
-const API_BASE_URL = "https://react-app-server-29xg.onrender.com/api";
+import { API_BASE_URL } from '../utils/url';
 
 export const fetchTasks = async (): Promise<AxiosResponse<TaskInterface[]>> => {
   try {

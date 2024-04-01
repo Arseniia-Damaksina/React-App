@@ -14,7 +14,7 @@ const HistoryArea: React.FC<{
   };
 
   return (
-    <div className="flex flex-col items-start w-1/3 bg-white rounded-xl">
+    <div className="flex flex-col items-start w-3/4 sm:w-2/3 xl:w-1/3 bg-white rounded-xl">
       <div className="w-full flex justify-between bg-secondary rounded-t-xl p-2">
         <h2 className="text-2xl font-bold p-3 text-white">History</h2>
         <div className="flex">

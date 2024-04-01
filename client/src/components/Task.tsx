@@ -17,6 +17,7 @@ const Task: React.FC<{
   setOpen: React.Dispatch<React.SetStateAction<null | number>>;
   closed: boolean;
 }> = ({ task, tasklists, closed }) => {
+  
   const [selectMove, setSelectMove] = useState<string>("Move To");
   const [open, setOpen] = React.useState<number | null>(null);
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);

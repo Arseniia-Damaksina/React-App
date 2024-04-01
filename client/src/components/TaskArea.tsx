@@ -20,9 +20,9 @@ const TaskArea: React.FC = () => {
   }, [dispatch]); 
 
   return (
-    <div className="w-9/10 min-h-9/10 h-auto my-8 rounded-large bg-white shadow-lg">
+    <div className="w-9/10 min-h-9/10 h-auto my-8 rounded-large bg-white rounded-2xl shadow-lg">
       <Header />
-      <div className="flex mx-6">
+      <div className="flex flex-col items-center sm:flex-row sm:items-start mx-6 overflow-x-scroll min-h-3/4 h-auto sm:flex-wrap md:flex-nowrap">
         {modifiedTasklists.map((tasklist) => {
           return <TaskColumn key={tasklist.id} tasklist={tasklist} />;
         })}
