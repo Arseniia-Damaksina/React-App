@@ -1,10 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 import { TaskList } from '../types/types';
 
-const API_BASE_URL = "https://react-app-server-29xg.onrender.com/api"
-// import.meta.env.NODE_ENV === "production"
-//   ? import.meta.env.BASE_URL_PROD
-//   : import.meta.env.BASE_URL_DEV;
+const API_BASE_URL = 
+// "https://react-app-server-29xg.onrender.com/api"
+import.meta.env.NODE_ENV === "production"
+  ? import.meta.env.BASE_URL_PROD
+  : import.meta.env.BASE_URL_DEV;
 
 export const fetchTaskLists = async (): Promise<AxiosResponse<TaskList[]>> => {
   try {
