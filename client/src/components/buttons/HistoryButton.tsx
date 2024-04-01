@@ -30,7 +30,7 @@ const HistoryButton: React.FC = () => {
         <Modal active={historyModal} setActive={setHistoryModal}>
           <ul>
             {activityLogs.map((activity) => {
-              return <li key={activity.id}>{activity.log}</li>;
+              return <li key={activity.id}>{activity.log.text}</li>;
             })}
           </ul>
         </Modal>

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { TaskListEntity } from 'src/entities/tasklist.entity';
 import { CreateTaskListDto } from 'src/DTOs/create-tasklist.dto';
 import { ActivityLogService } from 'src/modules/activityLog/activityLog.service';
+import formatDate from 'src/utils/formatDate';
 
 const taskListActions = {
   CREATE_TASKLIST: 'CREATE_TASKLIST',
@@ -55,7 +56,10 @@ export class TaskListService {
         entityType: actionType.TASKLIST,
         entityTypeId: savedTasklist.id,
         createdAt: new Date(),
-        log: `New task list ${newTasklist.title} was created`
+        log: {
+          text: `New task list ${newTasklist.title} was created`,
+          date: formatDate(new Date())
+        }
       });
 
       return savedTasklist;
@@ -76,7 +80,10 @@ export class TaskListService {
         entityType: actionType.TASKLIST,
         entityTypeId: updatedTasklist.id,
         createdAt: new Date(),
-        log: `Task list was renamed from ${tasklistOriginal} to ${updateTasklistDto.title}`
+        log: {
+          text: `Task list was renamed from ${tasklistOriginal} to ${updateTasklistDto.title}`,
+          date: formatDate(new Date())
+        }
       });
 
       return updatedTasklist;
@@ -96,7 +103,10 @@ export class TaskListService {
         entityType: actionType.TASKLIST,
         entityTypeId: id,
         createdAt: new Date(),
-        log: `Task list ${tasklistOriginal} was deleted`
+        log: {
+          text: `Task list ${tasklistOriginal} was deleted`,
+          date: formatDate(new Date())
+        }       
       });
 
       return `Task list ${tasklist.title} has been successfully deleted.`;

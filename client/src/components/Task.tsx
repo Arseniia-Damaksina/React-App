@@ -87,7 +87,15 @@ const Task: React.FC<{
           }`}
           onClick={closed ? () => handleOpen(task.id) : undefined}
         >
-          <p className="font-bold w-9/10">{task.name}</p>
+          <p className="font-bold w-9/10">
+            {task.name.length > 45 ? (
+              <>
+                {task.name.slice(0, 45)}...
+              </>
+            ) : (
+              task.name
+            )}
+          </p>
 
           <TaskMenu
             id={task.id}

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { TaskEntity } from 'src/entities/task.entity';
 import { CreateTaskDto } from 'src/DTOs/create-task.dto';
 import { ActivityLogService } from 'src/modules/activityLog/activityLog.service';
+import formatDate from 'src/utils/formatDate';
 
 const taskActions = {
   CREATE_TASK: 'CREATE_TASK',
@@ -75,7 +76,10 @@ export class TaskService {
         entityType: actionType.TASK,
         entityTypeId: savedTask.id,
         createdAt: new Date(),
-        log: `Task ${newTask.name} was created`,
+        log: {
+          text: `Task ${newTask.name} was created`,
+          date: formatDate(new Date())
+        }  
       });
 
       return savedTask;
@@ -120,7 +124,10 @@ export class TaskService {
           entityType: actionType.TASK,
           entityTypeId: updatedTask.id,
           createdAt: new Date(),
-          log: `Task was renamed from ${originalTask.name} to ${updatedTask.name}`,
+          log: {
+            text: `Task was renamed from ${originalTask.name} to ${updatedTask.name}`,
+            date: formatDate(new Date())
+          }  
         });
       }
 
@@ -130,7 +137,10 @@ export class TaskService {
           entityType: actionType.TASK,
           entityTypeId: updatedTask.id,
           createdAt: new Date(),
-          log: `Task description at ${updatedTask.name} was changed`,
+          log: {
+            text: `Task description at ${updatedTask.name} was changed`,
+            date: formatDate(new Date())
+          } 
         });
       }
 
@@ -140,7 +150,10 @@ export class TaskService {
           entityType: actionType.TASK,
           entityTypeId: updatedTask.id,
           createdAt: new Date(),
-          log: `Due date at ${updatedTask.name} was changed from ${originalTask.dueDate} to ${updatedTask.dueDate}`,
+          log: {
+            text: `Due date at ${updatedTask.name} was changed from ${originalTask.dueDate} to ${updatedTask.dueDate}`,
+            date: formatDate(new Date())
+          } 
         });
       }
 
@@ -150,7 +163,10 @@ export class TaskService {
           entityType: actionType.TASK,
           entityTypeId: updatedTask.id,
           createdAt: new Date(),
-          log: `Priority at ${updatedTask.name} was changed from ${originalTask.priority} to ${updatedTask.priority}`,
+          log: {
+            text: `Priority at ${updatedTask.name} was changed from ${originalTask.priority} to ${updatedTask.priority}`,
+            date: formatDate(new Date())
+          } 
         });
       }
 
@@ -160,7 +176,10 @@ export class TaskService {
           entityType: actionType.TASK,
           entityTypeId: updatedTask.id,
           createdAt: new Date(),
-          log: `Task ${updatedTask.name} was moved from ${originalTask.taskListTitle} to ${updatedTask.taskListTitle}`,
+          log: {
+            text: `Task ${updatedTask.name} was moved from ${originalTask.taskListTitle} to ${updatedTask.taskListTitle}`,
+            date: formatDate(new Date())
+          } 
         });
       }
 
@@ -181,7 +200,10 @@ export class TaskService {
         entityType: actionType.TASK,
         entityTypeId: id,
         createdAt: new Date(),
-        log: `Task ${originalTask.name} was deleted`,
+        log: {
+          text: `Task ${originalTask.name} was deleted`,
+          date: formatDate(new Date())
+        } 
       });
 
       return `Task ${task.name} has been successfully deleted.`;

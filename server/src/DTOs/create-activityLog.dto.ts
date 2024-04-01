@@ -5,5 +5,8 @@ export class CreateActivityLogDto {
   entityType: string;
   entityTypeId: number;
   createdAt: Date;
-  log: string;
+  log: {
+    text: string,
+    date: string    
+  };
 }

@@ -34,7 +34,7 @@ const TaskCard: React.FC<{
     setTaskModalOpen(false);
   };
   return (
-    <div className="flex flex-col items-start w-96 bg-white rounded-xl">
+    <div className="flex flex-col items-start w-2/3 bg-white rounded-xl">
       <div className="w-full flex justify-end bg-secondary rounded-t-xl p-2">
         <button onClick={handleEdit}>
           <PencilSquareIcon className="w-6 h-6 text-white mr-2" />
@@ -43,11 +43,11 @@ const TaskCard: React.FC<{
           <XMarkIcon className="w-6 h-6 text-white mr-2" />
         </button>
       </div>
-      <div className="flex">
-        <div>
+      <div className="flex w-full">
+        <div className="w-1/2 m-5">
           <div className="w-full flex justify-start">
             <div className="flex justify-start">
-              <p className="text-secondary w-full font-bold text-3xl p-3 text-center">
+              <p className="text-secondary w-full font-bold text-3xl p-3 text-left">
                 {task.name}
               </p>
             </div>
@@ -67,22 +67,27 @@ const TaskCard: React.FC<{
                 <span>Priority</span>
               </div>
             </div>
-            <div className="w-1/3 flex flex-col text-lg px-3">
+            <div className="w- flex flex-col text-lg px-3">
               <p className="w-full pb-3">{task.taskListTitle}</p>
               <p className="w-full pb-3">{task.dueDate}</p>
               <p className="w-full pb-3">{task.priority}</p>
             </div>
           </div>
-          <div className="w-2/3 px-3 pb-2">
+          <div className="px-3 pb-2">
             <p className="text-xl font-bold py-2">Description</p>
             <p className="text-gray-400 pb-3">{task.description}</p>
           </div>
         </div>
-        <div>
-          <h1>Activity</h1>
-          {activityLogs.map((activity) => (
-            <p key={activity.id}>{activity.log}</p>
-          ))}
+        <div className="bg-gray-100 w-1/2 p-5">
+          <h2 className="text-2xl font-bold p-3">Activity</h2>
+          <ul>
+            {activityLogs.map((activity) => (
+              <li className="flex m-3 text-sm text-gray-600" key={activity.id}>
+                <p className="w-2/3 mr-3">- {activity.log.text}</p>
+                <p className="w-1/3">{activity.log.date}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

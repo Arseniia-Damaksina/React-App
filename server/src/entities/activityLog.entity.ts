@@ -14,8 +14,12 @@ export class ActivityLogEntity {
   @Column()
   entityTypeId: number;
 
-  @Column()
-  log: string;
+  @Column('jsonb')
+  log: {
+    text: string,
+    date: string
+  };
+
 
   @CreateDateColumn()
   createdAt: Date;
