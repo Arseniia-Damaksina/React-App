@@ -1,7 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
 import { TaskInterface, addTask } from '../types/types';
 
-const API_BASE_URL: string = 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.NODE_ENV === "production"
+  ? import.meta.env.BASE_URL_PROD
+  : import.meta.env.BASE_URL_DEV;
 
 export const fetchTasks = async (): Promise<AxiosResponse<TaskInterface[]>> => {
   try {
