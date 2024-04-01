@@ -7,6 +7,7 @@ import {
   selectActivity,
 } from "../../slices/activitySlice";
 import Modal from "../ui/Modal";
+import HistoryArea from "../ui/HistoryArea";
 
 const HistoryButton: React.FC = () => {
   const [historyModal, setHistoryModal] = useState<boolean>(false);
@@ -28,11 +29,7 @@ const HistoryButton: React.FC = () => {
     <>
       {historyModal && (
         <Modal active={historyModal} setActive={setHistoryModal}>
-          <ul>
-            {activityLogs.map((activity) => {
-              return <li key={activity.id}>{activity.log.text}</li>;
-            })}
-          </ul>
+            <HistoryArea setHistoryModal={setHistoryModal} activityLogs={activityLogs}/>
         </Modal>
       )}
       <button

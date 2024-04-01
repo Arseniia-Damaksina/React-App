@@ -81,12 +81,21 @@ const TaskCard: React.FC<{
         <div className="bg-gray-100 w-1/2 p-5">
           <h2 className="text-2xl font-bold p-3">Activity</h2>
           <ul>
-            {activityLogs.map((activity) => (
-              <li className="flex m-3 text-sm text-gray-600" key={activity.id}>
-                <p className="w-2/3 mr-3">- {activity.log.text}</p>
-                <p className="w-1/3">{activity.log.date}</p>
-              </li>
-            ))}
+            {activityLogs.length > 0 ? (
+              <ul>
+                {activityLogs.map((activity) => (
+                  <li
+                    className="flex m-3 text-sm text-gray-600"
+                    key={activity.id}
+                  >
+                    <p className="w-2/3 mr-3">- {activity.log.text}</p>
+                    <p className="w-1/3">{activity.log.date}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-600">No activity logs found</p>
+            )}
           </ul>
         </div>
       </div>
