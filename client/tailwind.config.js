@@ -19,13 +19,6 @@ export default {
       // => @media (min-width: 1536px) { ... }
     },
 
-    fontFamily: {
-      logoFont: ["Omegle", "sans-serif"],
-      sloganFontRegular: ["RobotoMonoRegular", "monospace"],
-      sloganFontThin: ["RobotoMonoThin", "monospace"],
-      sloganFontBold: ["RobotoMonoBold", "monospace"],
-    },
-
     extend: {
       colors: {
         background: "#EEF5F9",
@@ -39,23 +32,6 @@ export default {
         yellowPriority: "#F6F7C4",
         yellowSecondary: "#FFC700",
         closed: "#F5CFD6"
-      },
-      borderRadius: {
-        default: "4px",
-        large: "12px",
-        xl_large: "32px",
-      },
-      padding: {
-        sm: "8px",
-        md: "16px",
-        lg: "24px",
-        xl: "48px",
-      },
-      spacing: {
-        sm: "8px",
-        md: "16px",
-        lg: "24px",
-        xl: "48px",
       },
       width: {
         "9/10": "95%",
@@ -89,7 +65,8 @@ export default {
         "1/3": "33%"
       },
       minHeight: {
-        "9/10": "90vh"
+        "9/10": "90vh",
+        "3/4": "75vh"
       }
     },
   },

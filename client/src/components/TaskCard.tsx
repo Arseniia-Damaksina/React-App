@@ -34,7 +34,7 @@ const TaskCard: React.FC<{
     setTaskModalOpen(false);
   };
   return (
-    <div className="flex flex-col items-start w-2/3 bg-white rounded-xl">
+    <div className="flex flex-col items-start w-3/4 lg:w-2/3 xl:1/2 bg-white rounded-xl">
       <div className="w-full flex justify-end bg-secondary rounded-t-xl p-2">
         <button onClick={handleEdit}>
           <PencilSquareIcon className="w-6 h-6 text-white mr-2" />
@@ -43,8 +43,8 @@ const TaskCard: React.FC<{
           <XMarkIcon className="w-6 h-6 text-white mr-2" />
         </button>
       </div>
-      <div className="flex w-full">
-        <div className="w-1/2 m-5">
+      <div className="flex flex-col md:flex-row w-full">
+        <div className="w-full md:w-1/3 m-5">
           <div className="w-full flex justify-start">
             <div className="flex justify-start">
               <p className="text-secondary w-full font-bold text-3xl p-3 text-left">
@@ -78,7 +78,7 @@ const TaskCard: React.FC<{
             <p className="text-gray-400 pb-3">{task.description}</p>
           </div>
         </div>
-        <div className="bg-gray-100 w-1/2 p-5">
+        <div className="bg-gray-100 w-full md:w-2/3 p-5">
           <h2 className="text-2xl font-bold p-3">Activity</h2>
           <ul>
             {activityLogs.length > 0 ? (

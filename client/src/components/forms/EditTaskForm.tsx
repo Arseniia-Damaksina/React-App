@@ -11,7 +11,9 @@ const EditTaskForm: React.FC<{
   task: TaskInterface;
   setEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ task, setEditModalOpen }) => {
+
   const dispatch = useAppDispatch();
+  
   const [formData, setFormData] = useState<FormData>({
     name: task.name,
     description: task.description,

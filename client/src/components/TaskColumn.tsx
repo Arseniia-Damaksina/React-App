@@ -81,7 +81,7 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
         </Modal>
       )}
 
-      <div className="w-64 flex flex-col mr-4">
+      <div className="flex flex-col mr-4 flex-shrink-0 w-64 md:w-56 lg:w-64">
         {tasklist.title !== "Closed" ? (
           <>
             <div className="flex justify-between py-4 pl-3 pr-2 rounded-lg bg-tertiary">
