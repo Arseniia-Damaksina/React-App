@@ -18,6 +18,7 @@ export class ActivityLogService {
     activityLog.actionType = activityLogDto.actionType;
     activityLog.entityType = activityLogDto.entityType;
     activityLog.entityTypeId = activityLogDto.entityTypeId;
+    activityLog.log = activityLogDto.log;
     activityLog.createdAt = activityLogDto.createdAt;
     
     return this.activityLogRepository.save(activityLog);

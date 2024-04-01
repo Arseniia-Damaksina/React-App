@@ -81,6 +81,7 @@ const AddTaskForm: React.FC<{
         ...formData,
         name: capitalizeFirstLetter(formData.name),
         taskListId: tasklist.id,
+        taskListTitle: tasklist.title
       })
     );
     window.location.reload();

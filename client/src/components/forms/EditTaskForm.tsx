@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useAppDispatch } from "../../store/store";
 import { updateTaskAsync } from "../../slices/taskSlice";
-import { FormData, TaskInterface } from "../../types/types";
+import { addTask, FormData, TaskInterface } from "../../types/types";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { capitalizeFirstLetter } from "../../utils/utilFunctions";
@@ -32,7 +32,12 @@ const EditTaskForm: React.FC<{
     }));
   };
 
-  const taskToUpdate = { ...formData, name: capitalizeFirstLetter(formData.name), taskListId: task.taskListId };
+  const taskToUpdate: addTask = {
+    ...formData,
+    name: capitalizeFirstLetter(formData.name),
+    taskListId: task.taskListId,
+    taskListTitle: task.taskListTitle,
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

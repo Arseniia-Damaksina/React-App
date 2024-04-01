@@ -26,10 +26,12 @@ export class TaskEntity {
   priority: Priority;
 
   @ManyToOne(() => TaskListEntity, taskList => taskList.tasks, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'taskListId' })
   taskList: TaskListEntity;
   
 
   @Column()
   taskListId: number;
+
+  @Column()
+  taskListTitle: string;
 }

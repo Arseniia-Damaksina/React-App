@@ -32,18 +32,27 @@ const Task: React.FC<{
   ) => {
     const selectedOption = e.target.value;
     setSelectMove(selectedOption);
+
     const updatedTaskList = tasklists.find(
       (tasklist) => tasklist.title === selectedOption
     );
+
     if (updatedTaskList) {
       await dispatch(
         updateTaskAsync({
           taskId: task.id,
-          updatedTask: { ...task, taskListId: updatedTaskList.id },
+          updatedTask: {
+            ...task,
+            taskListId: updatedTaskList.id,
+            taskListTitle: updatedTaskList.title,
+          },
         })
       );
-      window.location.reload();
+    } else {
+      console.error("Task list not found for selected option:", selectedOption);
     }
+
+    window.location.reload();
   };
 
   const handleOpen = (value: number) => {
@@ -78,7 +87,15 @@ const Task: React.FC<{
           }`}
           onClick={closed ? () => handleOpen(task.id) : undefined}
         >
-          <p className="font-bold">{task.name}</p>
+          <p className="font-bold w-9/10">
+            {task.name.length > 45 ? (
+              <>
+                {task.name.slice(0, 45)}...
+              </>
+            ) : (
+              task.name
+            )}
+          </p>
 
           <TaskMenu
             id={task.id}
@@ -121,11 +138,13 @@ const Task: React.FC<{
               className="w-full p-1 rounded-lg mt-3"
             >
               <option value="">Move To</option>
-              {tasklists.map((taskList) => (
-                <option key={taskList.id} value={taskList.title}>
-                  {taskList.title}
-                </option>
-              ))}
+              {tasklists
+                .filter((taskList) => taskList.title !== task.taskListTitle)
+                .map((taskList) => (
+                  <option key={taskList.id} value={taskList.title}>
+                    {taskList.title}
+                  </option>
+                ))}
             </select>
           </>
         ) : null}

@@ -13,10 +13,6 @@ export interface FormData {
   priority: string;
 }
 
-interface Title {
-  title: string;
-}
-
 export interface TaskInterface {
   id: number;
   name: string;
@@ -24,7 +20,7 @@ export interface TaskInterface {
   dueDate: string;
   priority: string;
   taskListId: number;
-  taskList: Title;
+  taskListTitle: string;
 }
 
 export interface addTask {
@@ -33,6 +29,7 @@ export interface addTask {
   dueDate: string;
   priority: string;
   taskListId: number;
+  taskListTitle: string
 }
 
 export interface TasksState {
@@ -54,6 +51,24 @@ export interface TaskListsState {
 
 export interface TasksState {
   tasks: TaskInterface[];
+  status: "loading" | "succeeded" | "failed" | "";
+  error: string | null;
+}
+
+export interface Activity {
+  id: number,
+  actionType: string;
+  entityType: string;
+  entityTypeId: number;
+  createdAt: Date;
+  log: {
+    text: string,
+    date: string
+  };
+}
+
+export interface ActivityState {
+  activity: Activity[];
   status: "loading" | "succeeded" | "failed" | "";
   error: string | null;
 }

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { TaskListEntity } from 'src/entities/tasklist.entity';
 import { CreateTaskListDto } from 'src/DTOs/create-tasklist.dto';
 import { ActivityLogService } from 'src/modules/activityLog/activityLog.service';
+import formatDate from 'src/utils/formatDate';
 
 const taskListActions = {
   CREATE_TASKLIST: 'CREATE_TASKLIST',
@@ -12,8 +13,8 @@ const taskListActions = {
 }
 
 const actionType = {
-  TASKLIST: 'TASKLIST',
-  TASK: 'TASK'
+  TASKLIST: 'tasklist',
+  TASK: 'task'
 }
 
 @Injectable()
@@ -55,6 +56,10 @@ export class TaskListService {
         entityType: actionType.TASKLIST,
         entityTypeId: savedTasklist.id,
         createdAt: new Date(),
+        log: {
+          text: `New task list ${newTasklist.title} was created`,
+          date: formatDate(new Date())
+        }
       });
 
       return savedTasklist;
@@ -66,6 +71,7 @@ export class TaskListService {
   async updateTasklist(id: number, updateTasklistDto: CreateTaskListDto): Promise<TaskListEntity> {
     try {
       const tasklist = await this.getOneTasklist(id);
+      const tasklistOriginal = tasklist.title;
       tasklist.title = updateTasklistDto.title;
       const updatedTasklist = await this.taskListRepository.save(tasklist);
       
@@ -74,6 +80,10 @@ export class TaskListService {
         entityType: actionType.TASKLIST,
         entityTypeId: updatedTasklist.id,
         createdAt: new Date(),
+        log: {
+          text: `Task list was renamed from ${tasklistOriginal} to ${updateTasklistDto.title}`,
+          date: formatDate(new Date())
+        }
       });
 
       return updatedTasklist;
@@ -85,6 +95,7 @@ export class TaskListService {
   async deleteTasklist(id: number): Promise<string> {
     try {
       const tasklist = await this.getOneTasklist(id);
+      const tasklistOriginal = tasklist.title;
       await this.taskListRepository.remove(tasklist);
 
       await this.activityLogService.logAction({
@@ -92,6 +103,10 @@ export class TaskListService {
         entityType: actionType.TASKLIST,
         entityTypeId: id,
         createdAt: new Date(),
+        log: {
+          text: `Task list ${tasklistOriginal} was deleted`,
+          date: formatDate(new Date())
+        }       
       });
 
       return `Task list ${tasklist.title} has been successfully deleted.`;

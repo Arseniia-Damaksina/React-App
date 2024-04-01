@@ -31,7 +31,7 @@ const TaskColumn: React.FC<{ tasklist: TaskList }> = ({ tasklist }) => {
   }, [dispatch]);
 
   const tasksByCategory = tasks.filter(
-    (task) => task.taskList.title === tasklist.title
+    (task) => task.taskListTitle === tasklist.title
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
