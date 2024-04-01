@@ -31,20 +31,7 @@ export class TaskService {
 
   async getAllTasks(): Promise<TaskEntity[]> {
     try {
-      const tasks = await this.taskRepository
-        .createQueryBuilder('task')
-        .leftJoinAndSelect('task.taskList', 'taskList')
-        .select([
-          'task.id',
-          'task.name',
-          'task.description',
-          'task.dueDate',
-          'task.priority',
-          'task.taskListId',
-          'taskList.title',
-        ])
-        .getMany();
-
+      const tasks = await this.taskRepository.find();
       return tasks;
     } catch (error) {
       throw new Error('Failed to fetch all tasks');
@@ -63,8 +50,14 @@ export class TaskService {
 
   async createTask(createTaskDto: CreateTaskDto): Promise<TaskEntity> {
     try {
-      const { name, description, dueDate, priority, taskListId } =
-        createTaskDto;
+      const {
+        name,
+        description,
+        dueDate,
+        priority,
+        taskListId,
+        taskListTitle,
+      } = createTaskDto;
 
       const newTask = this.taskRepository.create({
         name,
@@ -72,6 +65,7 @@ export class TaskService {
         dueDate,
         priority,
         taskListId,
+        taskListTitle,
       });
 
       const savedTask = await this.taskRepository.save(newTask);
@@ -100,8 +94,14 @@ export class TaskService {
         throw new Error('Task not found');
       }
 
-      const { name, description, dueDate, priority, taskListId } =
-        updateTaskDto;
+      const {
+        name,
+        description,
+        dueDate,
+        priority,
+        taskListId,
+        taskListTitle,
+      } = updateTaskDto;
 
       const originalTask = { ...task };
 
@@ -110,6 +110,7 @@ export class TaskService {
       task.dueDate = dueDate;
       task.priority = priority;
       task.taskListId = taskListId;
+      task.taskListTitle = taskListTitle;
 
       const updatedTask = await this.taskRepository.save(task);
 
@@ -159,7 +160,7 @@ export class TaskService {
           entityType: actionType.TASK,
           entityTypeId: updatedTask.id,
           createdAt: new Date(),
-          log: `Task list at ${updatedTask.name} was changed from ${originalTask.taskList.title} to ${updatedTask.taskList.title}`,
+          log: `Task ${updatedTask.name} was moved from ${originalTask.taskListTitle} to ${updatedTask.taskListTitle}`,
         });
       }
 
@@ -172,7 +173,7 @@ export class TaskService {
   async deleteTask(id: number): Promise<string> {
     try {
       const task = await this.getOneTask(id);
-      const originalTask = {...task};
+      const originalTask = { ...task };
       await this.taskRepository.remove(task);
 
       await this.activityLogService.logAction({
@@ -180,7 +181,7 @@ export class TaskService {
         entityType: actionType.TASK,
         entityTypeId: id,
         createdAt: new Date(),
-        log: `Task ${originalTask.name} was deleted`
+        log: `Task ${originalTask.name} was deleted`,
       });
 
       return `Task ${task.name} has been successfully deleted.`;

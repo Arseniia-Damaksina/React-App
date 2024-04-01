@@ -7,7 +7,7 @@ import {
   ListBulletIcon,
   ArrowUpIcon,
 } from "@heroicons/react/24/outline";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../store/store";
 import { fetchLogsByTypeAndId, selectActivity } from "../slices/activitySlice";
@@ -68,7 +68,7 @@ const TaskCard: React.FC<{
               </div>
             </div>
             <div className="w-1/3 flex flex-col text-lg px-3">
-              <p className="w-full pb-3">{task.taskList.title}</p>
+              <p className="w-full pb-3">{task.taskListTitle}</p>
               <p className="w-full pb-3">{task.dueDate}</p>
               <p className="w-full pb-3">{task.priority}</p>
             </div>
@@ -80,8 +80,8 @@ const TaskCard: React.FC<{
         </div>
         <div>
           <h1>Activity</h1>
-          {activityLogs.map((log) => (
-            <p key={log.id}>{log.actionType}</p>
+          {activityLogs.map((activity) => (
+            <p key={activity.id}>{activity.log}</p>
           ))}
         </div>
       </div>

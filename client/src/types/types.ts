@@ -13,10 +13,6 @@ export interface FormData {
   priority: string;
 }
 
-interface Title {
-  title: string;
-}
-
 export interface TaskInterface {
   id: number;
   name: string;
@@ -24,7 +20,7 @@ export interface TaskInterface {
   dueDate: string;
   priority: string;
   taskListId: number;
-  taskList: Title;
+  taskListTitle: string;
 }
 
 export interface addTask {
@@ -33,6 +29,7 @@ export interface addTask {
   dueDate: string;
   priority: string;
   taskListId: number;
+  taskListTitle: string
 }
 
 export interface TasksState {
@@ -64,6 +61,7 @@ export interface Activity {
   entityType: string;
   entityTypeId: number;
   createdAt: Date;
+  log: string;
 }
 
 export interface ActivityState {

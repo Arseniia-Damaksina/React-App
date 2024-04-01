@@ -28,13 +28,11 @@ const HistoryButton: React.FC = () => {
     <>
       {historyModal && (
         <Modal active={historyModal} setActive={setHistoryModal}>
-          {activityLogs.map((log) => {
-            return(
-                <div>
-                    {log.actionType}
-                </div>
-            )
-          })}
+          <ul>
+            {activityLogs.map((activity) => {
+              return <li key={activity.id}>{activity.log}</li>;
+            })}
+          </ul>
         </Modal>
       )}
       <button

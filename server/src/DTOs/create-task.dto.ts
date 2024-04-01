@@ -6,4 +6,5 @@ export class CreateTaskDto {
   dueDate: string;
   priority: Priority;
   taskListId: number;
+  taskListTitle: string
 }
