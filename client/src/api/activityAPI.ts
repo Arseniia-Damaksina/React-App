@@ -1,10 +1,11 @@
 import axios, { AxiosResponse } from "axios";
 import { Activity } from "../types/types";
 
-const API_BASE_URL = "https://react-app-server-29xg.onrender.com/api"
-// import.meta.env.NODE_ENV === "production"
-//   ? import.meta.env.BASE_URL_PROD
-//   : import.meta.env.BASE_URL_DEV;
+const API_BASE_URL = 
+// "https://react-app-server-29xg.onrender.com/api"
+import.meta.env.NODE_ENV === "production"
+  ? import.meta.env.BASE_URL_PROD
+  : import.meta.env.BASE_URL_DEV;
 
 
 export async function getAllActivityLogs(): Promise<AxiosResponse<Activity[]>> {
