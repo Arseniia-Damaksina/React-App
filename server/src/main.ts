@@ -10,7 +10,10 @@ async function bootstrap() {
 
   // CORS
   app.enableCors({
-    origin: 'http://localhost:5173',
+    origin: [
+      'http://localhost:5173',
+      'https://react-app-3a8p.onrender.com/',
+    ],
     credentials: true,
   });
 
